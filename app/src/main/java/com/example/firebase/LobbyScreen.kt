@@ -80,5 +80,21 @@ fun LobbyScreen() {
                 modifier = Modifier.padding(top = 200.dp, start = 16.dp)
             )
         }
+        if(AreOnline.value){
+            Button(
+
+                onClick = {
+                    //här bör vi kunna anropa en mainScreen efter vi har skapat den på nåt sätt
+                },
+
+                modifier = Modifier
+                    .padding(start = 145.dp)
+                    .padding(top = 310.dp)
+
+            ) {
+                Text("StartaSpelet")
+
+            }
+        }
     }
 }
