@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +24,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun LobbyScreen() {
+fun LobbyScreen(navController: NavHostController) { // inkuderat Nav
     val db = Firebase.firestore
     val playerList = remember { MutableStateFlow<List<Player>>(emptyList()) }
     val coroutineScope = rememberCoroutineScope()
@@ -84,15 +85,16 @@ fun LobbyScreen() {
             Button(
 
                 onClick = {
-                    //här bör vi kunna anropa en mainScreen efter vi har skapat den på nåt sätt
-                },
 
+                    navController.navigate("MainScreen") // nu kan vi navigera
+
+                },
                 modifier = Modifier
                     .padding(start = 145.dp)
                     .padding(top = 310.dp)
 
             ) {
-                Text("StartaSpelet")
+                Text("STARTA SPELET")
 
             }
         }

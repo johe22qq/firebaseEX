@@ -8,7 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.firebase.ui.theme.FirebaseTheme
 import kotlinx.coroutines.flow.StateFlow
-
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.rememberNavController
 
 
 class MainActivity : ComponentActivity() {
@@ -17,13 +18,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FirebaseTheme {
-                LobbyScreen()
+
+                val navController = rememberNavController()
+
+                ScreenNavigation(navController = navController)
             }
         }
     }
 }
-
-
 @Composable
 fun <T> StateFlow<T>.collectAsStateWithLifecycle(): State<T> {
     val state = remember { mutableStateOf(value) }
@@ -32,7 +34,6 @@ fun <T> StateFlow<T>.collectAsStateWithLifecycle(): State<T> {
     }
     return state
 }
-
 
 /*
 @Preview(showBackground = true)

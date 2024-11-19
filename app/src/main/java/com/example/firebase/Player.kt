@@ -11,5 +11,5 @@ data class Player(
 
 fun addScore(score: Int){
 
-    // den gör vi sen
+    // till senare
 }
