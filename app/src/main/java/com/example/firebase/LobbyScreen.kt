@@ -11,19 +11,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+
 
 @Composable
 fun LobbyScreen() {
     val db = Firebase.firestore
     val playerList = remember { MutableStateFlow<List<Player>>(emptyList()) }
     val coroutineScope = rememberCoroutineScope()
+    var AreOnline = remember { mutableStateOf(false) }
 
 
     LaunchedEffect(Unit) {
@@ -32,6 +36,7 @@ fun LobbyScreen() {
                 val players = value.toObjects(Player::class.java)
                 coroutineScope.launch {
                     playerList.emit(players)
+                    AreOnline.value = players.all { it.status == "online" }
                 }
             }
         }
@@ -67,6 +72,13 @@ fun LobbyScreen() {
                     }
                 )
             }
+        }
+
+        if(!AreOnline.value){
+            Text(
+                text = "Waiting for both player to connect......",
+                modifier = Modifier.padding(top = 200.dp, start = 16.dp)
+            )
         }
     }
 }

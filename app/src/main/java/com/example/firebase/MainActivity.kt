@@ -9,12 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.firebase.ui.theme.FirebaseTheme
 import kotlinx.coroutines.flow.StateFlow
 
-data class Player(
-    var playerID: String = "",
-    var name: String = "",
-    var status: String = "",
 
-)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +33,8 @@ fun <T> StateFlow<T>.collectAsStateWithLifecycle(): State<T> {
     return state
 }
 
+
+/*
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -45,6 +42,8 @@ fun DefaultPreview() {
         LobbyScreen()
     }
 }
+*/
+
 
 
 
