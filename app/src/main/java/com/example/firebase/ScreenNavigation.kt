@@ -11,10 +11,11 @@ import androidx.navigation.compose.composable
 fun ScreenNavigation(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "LobbyScreen"
+        startDestination = "StartScreen"
     ) {
         composable("LobbyScreen") { LobbyScreen(navController) } // vi behöver kunna komma ifrån LobbyScreen
         composable("MainScreen") { MainScreen() }// Eventuellt även ifrån MainScreen beroende på om vi gör fler fönster eller vill kunna komam tillbaka
+        composable("StartScreen") { StartScreen(navController) }
 // lust nu ingen navController i mainscreen, (test)
     }
 }
