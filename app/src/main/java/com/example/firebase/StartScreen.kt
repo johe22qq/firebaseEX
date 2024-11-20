@@ -11,11 +11,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
 
 @Composable
 fun StartScreen(navController: NavController) {
+    Image(
+
+        painter = painterResource(R.drawable.startbild),
+        contentDescription = "bild på tictac",
+        modifier = Modifier.fillMaxSize(),
+        contentScale = ContentScale.Crop
+    )
+
     Text(
-        "Henrys Spel",
+        "TicTacToe",
         modifier = Modifier.padding(start = 110.dp, top = 70.dp),
         style = MaterialTheme.typography.headlineLarge
     )
@@ -29,13 +41,10 @@ fun StartScreen(navController: NavController) {
         },
         modifier = Modifier
             .padding(start = 145.dp)
-            .padding(top = 310.dp)
+            .padding(top = 150.dp)
 
     ) {
-        Icon(
-            painter = painterResource(id = R.drawable.baseline_play_arrow_24),
-            contentDescription = "starta spel knapp",
-            modifier = Modifier.size(90.dp)
-        )
+
+        Text("Gå till lobbyn")
     }
 }
