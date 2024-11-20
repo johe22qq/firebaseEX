@@ -2,9 +2,11 @@ package com.example.firebase
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -15,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.google.firebase.firestore.ktx.firestore
@@ -94,7 +97,12 @@ fun LobbyScreen(navController: NavHostController) { // inkuderat Nav
                     .padding(top = 310.dp)
 
             ) {
-                Text("STARTA SPELET")
+                Icon(
+                    painter = painterResource(id= R.drawable.baseline_play_arrow_24),
+                    contentDescription ="starta spel knapp",
+                    modifier = Modifier.size(90.dp)
+                )
+               // Text("STARTA SPELET")
 
             }
         }
