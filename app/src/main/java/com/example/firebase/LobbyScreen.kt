@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun LobbyScreen(navController: NavHostController) { // inkuderat Nav
+fun LobbyScreen(navController: NavHostController) { // inkuderat Nav, måste ha en gamemodell
     val db = Firebase.firestore
     val playerList = remember { MutableStateFlow<List<Player>>(emptyList()) }
     val coroutineScope = rememberCoroutineScope()

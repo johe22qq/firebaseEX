@@ -46,7 +46,7 @@ fun StartScreen(navController: NavController) {
 
         onClick = {
 
-            navController.navigate("LobbyScreen")
+            navController.navigate("NewPlayerScreen")
 
         },
         modifier = Modifier
@@ -56,7 +56,7 @@ fun StartScreen(navController: NavController) {
     ) {
 
         Text(
-            "GÅ TILL LOBBYN",
+            "SPELA",
             color = Color.Black
 
         )

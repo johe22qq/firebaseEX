@@ -26,6 +26,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun <T> StateFlow<T>.collectAsStateWithLifecycle(): State<T> {
     val state = remember { mutableStateOf(value) }
@@ -34,6 +35,8 @@ fun <T> StateFlow<T>.collectAsStateWithLifecycle(): State<T> {
     }
     return state
 }
+
+
 
 /*
 @Preview(showBackground = true)
