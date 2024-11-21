@@ -12,9 +12,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun StartScreen(navController: NavController) {
@@ -28,10 +34,14 @@ fun StartScreen(navController: NavController) {
 
     Text(
         "TicTacToe",
-        modifier = Modifier.padding(start = 110.dp, top = 70.dp),
-        style = MaterialTheme.typography.headlineLarge
+        modifier = Modifier.padding(start = 65.dp, top = 70.dp),
+        style = MaterialTheme.typography.displayLarge,
+
+
+
     )
 //delvis samam kod som i lobby, ska ändras
+
     Button(
 
         onClick = {
@@ -45,6 +55,10 @@ fun StartScreen(navController: NavController) {
 
     ) {
 
-        Text("Gå till lobbyn")
+        Text(
+            "GÅ TILL LOBBYN",
+            color = Color.Black
+
+        )
     }
 }
