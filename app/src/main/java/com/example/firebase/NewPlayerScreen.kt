@@ -1,21 +1,74 @@
 package com.example.firebase
 
 import android.content.Context
+import android.util.Log
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 @Composable
-fun NewPlayerScreen(navController: NavController /*, model: GameModel*/) {
+fun NewPlayerScreen(navController: NavController) {
+    val db = Firebase.firestore
+    val sharedPreferences = LocalContext.current.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
 
-    Button(
-        onClick = {
-            navController.navigate("LobbyScreen") // Navigate to LobbyScreen
-        }
+    var playerName by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(19.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Go to Lobby")
+        Text("ENTER YOUR NAME!")
+
+        Spacer(modifier = Modifier.height(19.dp))
+
+        OutlinedTextField(
+            value = playerName,
+            onValueChange = { playerName = it },
+            label = { Text("YOUR NAME:") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(17.dp))
+
+        Button(
+            onClick = {
+                if (playerName.isNotBlank()) {
+                    val newPlayerId = db.collection("players").document().id
+                    val newPlayer = Player(
+                        playerID = newPlayerId,
+                        name = playerName,
+                        status = "online",
+                        score = 0
+                    )
+
+                    db.collection("players").document(newPlayerId).set(newPlayer)
+                        .addOnSuccessListener {
+                            sharedPreferences.edit().putString("playerId", newPlayerId).apply()
+                            navController.navigate("LobbyScreen")
+                        }
+                        .addOnFailureListener { error ->
+                            Log.e("NewPlayerScreen", "Error with adding player: ${error.message}", error)
+                        }
+                } else {
+                    Log.d("NewPlayerScreen", "Your name is NOT space")
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("JOIN GAME")
+        }
     }
 }

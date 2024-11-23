@@ -1,5 +1,6 @@
 package com.example.firebase
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -31,24 +33,45 @@ import kotlinx.coroutines.launch
 @Composable
 fun LobbyScreen(navController: NavHostController) { // inkuderat Nav, måste ha en gamemodell
     val db = Firebase.firestore
-    val playerList = remember { MutableStateFlow<List<Player>>(emptyList()) }
     val coroutineScope = rememberCoroutineScope()
-    var AreOnline = remember { mutableStateOf(false) }
 
+    val playerList = remember { MutableStateFlow<List<Player>>(emptyList()) }
+    val gameMap = remember { MutableStateFlow<Map<String, Game>>(emptyMap()) }
 
+// vi behöver hämta spelarens id i nån currentvariabel och matcha databasens id,  inspiererad av lab5 ex
+    val sharedPreferences = LocalContext.current.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
+        .getString("playerId","")
+
+// behöver ändra dernna en dekl
     LaunchedEffect(Unit) {
         db.collection("players").addSnapshotListener { value, error ->
             if (error == null && value != null) {
                 val players = value.toObjects(Player::class.java)
                 coroutineScope.launch {
-                    playerList.emit(players)
-                    AreOnline.value = players.all { it.status == "online" }
+                    playerList.emit(value.toObjects(Player::class.java))
                 }
             }
         }
     }
 
+    db.collection("games")
+        .addSnapshotListener { value, error ->
+            if (error != null) {
+                return@addSnapshotListener
+            }
+            if (value != null) {
+                val updatedMap = value.documents.associate { doc ->
+                    doc.id to doc.toObject(Game::class.java)!!
+                }
+                gameMap.value = updatedMap
+            }
+        }
+
+
+    //nedan för behöver jag fortsätta att ändra
+
     val players by playerList.collectAsStateWithLifecycle()
+    val games by gameList.collectAsStateWithLifecycle()
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
