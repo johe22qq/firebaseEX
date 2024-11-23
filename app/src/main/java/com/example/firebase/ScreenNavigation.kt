@@ -8,18 +8,21 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 @Composable
-fun ScreenNavigation(navController: NavHostController) {
-
-    //val model = GameModel()
+fun ScreenNavigation(navController: NavHostController, model: GameModel) {
 
     NavHost(
         navController = navController,
         startDestination = "StartScreen"
     ) {
-        composable("LobbyScreen") { LobbyScreen(navController) } // vi behöver kunna komma ifrån LobbyScreen
-        composable("MainScreen") { MainScreen() }// Eventuellt även ifrån MainScreen beroende på om vi gör fler fönster eller vill kunna komam tillbaka
+        composable("LobbyScreen") { LobbyScreen(navController,model) }
+
+        composable("MainScreen/{gameId}") { backStackEntry ->
+            val gameId = backStackEntry.arguments?.getString("gameId")
+            MainScreen(navController,model,gameId)
+
+        }// Eventuellt även ifrån MainScreen beroende på om vi gör fler fönster eller vill kunna komam tillbaka
         composable("StartScreen") { StartScreen(navController) }
-        composable("NewPlayerScreen") { NewPlayerScreen(navController) }
+        composable("NewPlayerScreen") { NewPlayerScreen(navController,model) }
 // lust nu ingen navController i mainscreen, (test)
     }
 }

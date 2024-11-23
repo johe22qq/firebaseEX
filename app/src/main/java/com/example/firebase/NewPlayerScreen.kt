@@ -17,9 +17,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 @Composable
-fun NewPlayerScreen(navController: NavController) {
-    val db = Firebase.firestore
-    val sharedPreferences = LocalContext.current.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
+fun NewPlayerScreen(navController: NavController, model: GameModel) {
+
 
     var playerName by remember { mutableStateOf("") }
 
@@ -46,7 +45,7 @@ fun NewPlayerScreen(navController: NavController) {
         Button(
             onClick = {
                 if (playerName.isNotBlank()) {
-                    val newPlayerId = db.collection("players").document().id
+                    val newPlayerId = model.db.collection("players").document().id
                     val newPlayer = Player(
                         playerID = newPlayerId,
                         name = playerName,
@@ -54,9 +53,9 @@ fun NewPlayerScreen(navController: NavController) {
                         score = 0
                     )
 
-                    db.collection("players").document(newPlayerId).set(newPlayer)
+                    model.db.collection("players").document(newPlayerId).set(newPlayer)
                         .addOnSuccessListener {
-                            sharedPreferences.edit().putString("playerId", newPlayerId).apply()
+                            model.localPlayerId.value = newPlayerId
                             navController.navigate("LobbyScreen")
                         }
                         .addOnFailureListener { error ->
