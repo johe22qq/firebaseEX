@@ -59,6 +59,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                     onClick = {
                         if (opponentName.isNotBlank()) {
                             // fixa det praktiska med att skicka en chalange
+                          
 
                         }
                     },

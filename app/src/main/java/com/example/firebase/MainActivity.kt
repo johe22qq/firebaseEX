@@ -19,12 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FirebaseTheme {
 
-                val gameModel = remember { GameModel() }
-                gameModel.initGame()
-
-                val navController = rememberNavController()
-
-                ScreenNavigation(navController = navController, model = gameModel)
+                StartTheGame()
             }
         }
     }

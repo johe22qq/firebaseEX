@@ -3,9 +3,11 @@
 package com.example.firebase
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun ScreenNavigation(navController: NavHostController, model: GameModel) {
@@ -26,4 +28,10 @@ fun ScreenNavigation(navController: NavHostController, model: GameModel) {
 // lust nu ingen navController i mainscreen, (test)
     }
 }
-
+@Composable
+fun StartTheGame(){
+    val gameModel = remember { GameModel() }
+    gameModel.initGame()
+    val navController = rememberNavController()
+    ScreenNavigation(navController = navController, model = gameModel)
+}
