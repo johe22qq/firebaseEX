@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 @Composable
 fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuderat Nav, måste ha en gamemodell
 
+    val games by model.gameMap.collectAsStateWithLifecycle()
 
 // vi behöver hämta spelarens id i nån currentvariabel och matcha databasens id,  inspiererad av lab5 ex
     val sharedPreferences =
@@ -35,9 +36,6 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
 
     var opponentName by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
-
-
-//BEHÖVER SKAPA DÄR MAN KAN ANGE MOTSTÅNDARENAMN OCH ATT MAN KAN UTMANA!
 
     Scaffold(
         content = { innerPadding ->
@@ -54,13 +52,23 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
                 Button(
                     onClick = {
                         if (opponentName.isNotBlank()) {
-                            // fixa det praktiska med att skicka en chalange
-                          
+                            val opponent =
+                                model.playerMap.value.entries.find { it.value.name == opponentName }
+                            if (opponent != null) {
 
+                                model.db.collection("games").add(
+                                    Game(
+                                        gameState = "invite",
+                                        player1Id = model.localPlayerId.value!!,
+                                        player2Id = opponent.key
+                                    )
+                                )
+                            } else {
+                                Text("Player not found!")
+                            }
                         }
                     },
                     modifier = Modifier.fillMaxWidth()
@@ -71,10 +79,6 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
         }
     )
 }
-
-
-
-
 
     /*
 

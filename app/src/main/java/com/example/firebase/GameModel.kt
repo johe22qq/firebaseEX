@@ -12,6 +12,7 @@ class GameModel: ViewModel() {
     val playerMap = MutableStateFlow<Map<String, Player>>(emptyMap())
     val gameMap = MutableStateFlow<Map<String, Game>>(emptyMap())
 
+
     fun initGame() {
 
         db.collection("players")
