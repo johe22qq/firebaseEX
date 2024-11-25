@@ -45,6 +45,15 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
         Button(
             onClick = {
                 if (playerName.isNotBlank()) {
+                    model.db.collection("players")
+                        .whereEqualTo("name",playerName)
+                        .get()
+                        .addOnSuccessListener { querySnapshot ->
+                            val PlayerEXIST = querySnapshot.documents.first()
+                            model.localPlayerId.value = PlayerEXIST.id
+                            navController.navigate("LobbyScreen")
+                        }
+                }else {
                     val newPlayerId = model.db.collection("players").document().id
                     val newPlayer = Player(
                         playerID = newPlayerId,
@@ -52,7 +61,6 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
                         status = "online",
                         score = 0
                     )
-
                     model.db.collection("players").document(newPlayerId).set(newPlayer)
                         .addOnSuccessListener {
                             model.localPlayerId.value = newPlayerId
@@ -61,8 +69,6 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
                         .addOnFailureListener { error ->
                             Log.e("NewPlayerScreen", "Error with adding player: ${error.message}", error)
                         }
-                } else {
-                    Log.d("NewPlayerScreen", "Your name is NOT space")
                 }
             },
             modifier = Modifier.fillMaxWidth()
@@ -71,3 +77,4 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
         }
     }
 }
+

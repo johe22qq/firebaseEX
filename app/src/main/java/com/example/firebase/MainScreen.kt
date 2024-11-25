@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,6 +20,19 @@ import androidx.navigation.NavController
 
 @Composable
 fun MainScreen(navController: NavController, model: GameModel, gameId: String?) { //
+
+    val game = gameId?.let { model.gameMap.value[it] }
+
+    Image(
+        painter = painterResource(id = R.drawable.bord),
+        contentDescription = "bord",
+        modifier = Modifier.fillMaxSize(),
+    )
+
+    if(game == null){
+        Text("spelet hittas ej")
+        return
+    }
 
     val cells = List(42) { it }
     LazyVerticalGrid(
@@ -39,6 +53,11 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                 )
             }
         }
+    }
+    if(game.player1Id == model.localPlayerId.value){
+        Text("spelare 1 tur")
+    }else {
+        Text("spelare 2 tur")
     }
 }
 

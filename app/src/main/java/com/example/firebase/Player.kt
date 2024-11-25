@@ -1,6 +1,5 @@
 package com.example.firebase
 
-
 data class Player(
     var playerID: String = "",
     var name: String = "",
@@ -8,7 +7,6 @@ data class Player(
     var score: Int = 0
 
     )
-
 fun addScore(score: Int){
 
     // till senare
