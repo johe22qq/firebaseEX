@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -21,23 +22,16 @@ import androidx.navigation.NavController
 @Composable
 fun MainScreen(navController: NavController, model: GameModel, gameId: String?) { //
 
-    val game = gameId?.let { model.gameMap.value[it] }
-
     Image(
         painter = painterResource(id = R.drawable.bord),
         contentDescription = "bord",
         modifier = Modifier.fillMaxSize(),
-    )
-
-    if(game == null){
-        Text("spelet hittas ej")
-        return
-    }
+        contentScale = ContentScale.Crop)
 
     val cells = List(42) { it }
     LazyVerticalGrid(
         columns = GridCells.Fixed(6),
-        Modifier.padding(top = 59.dp, start = 10.dp, end = 10.dp),
+        Modifier.padding(top = 230.dp, start = 14.dp, end = 14.dp),
     ) {
         items(cells) { cell ->
             Box(
@@ -50,14 +44,11 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                     painter = painterResource(id = R.drawable.trabakrund),
                     contentDescription = "trabackrund",
                     modifier = Modifier.fillMaxSize(),
+                   // Modifier.size(20.dp)
                 )
             }
         }
     }
-    if(game.player1Id == model.localPlayerId.value){
-        Text("spelare 1 tur")
-    }else {
-        Text("spelare 2 tur")
-    }
+
 }
 

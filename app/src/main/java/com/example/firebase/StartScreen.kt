@@ -37,9 +37,30 @@ fun StartScreen(navController: NavController) {
         modifier = Modifier.padding(start = 65.dp, top = 70.dp),
         style = MaterialTheme.typography.displayLarge,
 
-
-
     )
+
+
+    Button(
+        onClick = {
+            navController.navigate("LeaderboardScreen")
+        },
+
+        modifier = Modifier
+            .padding(start = 120.dp)
+            .padding(top = 210.dp)
+
+    ) {
+
+        Text(
+
+            "LEADERBOARD",
+            color = Color.Black
+
+        )
+
+    }
+
+
 //delvis samam kod som i lobby, ska ändras
 
     Button(
@@ -61,4 +82,6 @@ fun StartScreen(navController: NavController) {
 
         )
     }
+
+
 }

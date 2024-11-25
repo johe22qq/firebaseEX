@@ -78,6 +78,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                 }
 
                 games.forEach { (gameId, game) ->
+
                     if (game.player1Id == model.localPlayerId.value || game.player2Id == model.localPlayerId.value) {
                         if (game.gameState == "player1_turn") {
                             LaunchedEffect(gameId) {

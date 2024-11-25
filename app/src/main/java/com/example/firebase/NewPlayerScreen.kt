@@ -46,28 +46,28 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
             onClick = {
                 if (playerName.isNotBlank()) {
                     model.db.collection("players")
-                        .whereEqualTo("name",playerName)
+                        .whereEqualTo("name", playerName)
                         .get()
                         .addOnSuccessListener { querySnapshot ->
-                            val PlayerEXIST = querySnapshot.documents.first()
-                            model.localPlayerId.value = PlayerEXIST.id
-                            navController.navigate("LobbyScreen")
-                        }
-                }else {
-                    val newPlayerId = model.db.collection("players").document().id
-                    val newPlayer = Player(
-                        playerID = newPlayerId,
-                        name = playerName,
-                        status = "online",
-                        score = 0
-                    )
-                    model.db.collection("players").document(newPlayerId).set(newPlayer)
-                        .addOnSuccessListener {
-                            model.localPlayerId.value = newPlayerId
-                            navController.navigate("LobbyScreen")
-                        }
-                        .addOnFailureListener { error ->
-                            Log.e("NewPlayerScreen", "Error with adding player: ${error.message}", error)
+                            val PlayerEXIST = querySnapshot.documents.firstOrNull()
+
+                            if (PlayerEXIST != null) {
+                                model.localPlayerId.value = PlayerEXIST.id
+                                navController.navigate("LobbyScreen")
+                            } else {
+                                val newPlayerId = model.db.collection("players").document().id
+                                val newPlayer = Player(
+                                    playerID = newPlayerId,
+                                    name = playerName,
+                                    status = "online",
+                                    score = 0
+                                )
+                                model.db.collection("players").document(newPlayerId).set(newPlayer)
+                                    .addOnSuccessListener {
+                                        model.localPlayerId.value = newPlayerId
+                                        navController.navigate("LobbyScreen")
+                                    }
+                            }
                         }
                 }
             },
@@ -77,4 +77,3 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
         }
     }
 }
-
