@@ -1,6 +1,7 @@
 package com.example.firebase
 
 import android.content.Context
+import android.graphics.Color
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -67,9 +68,9 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                                         player2Id = opponent.key
                                     )
                                 )
-                            } else {
-                                errorMessage =" user does not exist "
                             }
+                        }else{
+                            errorMessage = "DET FINNS INGEN SPELARE MED DET NAMNET "
                         }
                     },
                     modifier = Modifier.fillMaxWidth()
@@ -100,7 +101,15 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                             Text("ACCEPT")
                         }
                     }
+                    }
                 }
+                if(errorMessage.isNotBlank()){
+
+                    Text(
+                        errorMessage,
+                        modifier = Modifier.padding(top=300.dp, start = 20.dp, end = 20.dp)
+
+                    )
             }
         }
     )

@@ -31,7 +31,9 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
     val cells = List(42) { it }
     LazyVerticalGrid(
         columns = GridCells.Fixed(6),
-        Modifier.padding(top = 230.dp, start = 14.dp, end = 14.dp),
+        modifier = Modifier
+            .size(1000.dp)
+            .padding(top = 230.dp, start = 14.dp, end = 14.dp),
     ) {
         items(cells) { cell ->
             Box(
