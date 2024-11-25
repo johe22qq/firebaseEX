@@ -13,6 +13,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -77,6 +78,13 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                 }
 
                 games.forEach { (gameId, game) ->
+                    if (game.player1Id == model.localPlayerId.value || game.player2Id == model.localPlayerId.value) {
+                        if (game.gameState == "player1_turn") {
+                            LaunchedEffect(gameId) {
+                                navController.navigate("MainScreen/$gameId")
+                            }
+                        }
+                    }
                     if (game.player2Id == model.localPlayerId.value && game.gameState == "invite") {
                         Text("CHALLENGE FROM: ${model.playerMap.value[game.player1Id]?.name}")
                         Button(
