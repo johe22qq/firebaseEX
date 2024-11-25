@@ -67,13 +67,30 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                                     )
                                 )
                             } else {
-                                Text("Player not found!")
+                                errorMessage =" user does not exist "
                             }
                         }
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("SEND CHALLENGE")
+                }
+
+                games.forEach { (gameId, game) ->
+                    if (game.player2Id == model.localPlayerId.value && game.gameState == "invite") {
+                        Text("CHALLENGE FROM: ${model.playerMap.value[game.player1Id]?.name}")
+                        Button(
+                            onClick = {
+                                model.db.collection("games").document(gameId)
+                                    .update("gameState", "player1_turn")
+                                    .addOnSuccessListener {
+                                        navController.navigate("MainScreen/$gameId")
+                                    }
+                            }
+                        ) {
+                            Text("ACCEPT")
+                        }
+                    }
                 }
             }
         }
