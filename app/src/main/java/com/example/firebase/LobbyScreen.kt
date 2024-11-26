@@ -92,7 +92,12 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                         Button(
                             onClick = {
                                 model.db.collection("games").document(gameId)
-                                    .update("gameState", "player1_turn")
+                                    .update(
+                                        mapOf(
+                                            "gameState" to "player1_turn",
+                                            "currentPlayerID" to game.player1Id
+                                        )
+                                    )
                                     .addOnSuccessListener {
                                         navController.navigate("MainScreen/$gameId")
                                     }
@@ -116,7 +121,6 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
 }
 
     /*
-
     behöver göra om denna helt,
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 

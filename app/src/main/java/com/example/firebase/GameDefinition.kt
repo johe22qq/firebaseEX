@@ -5,7 +5,8 @@ data class Game(
     val player1Id: String = "",
     val player2Id: String = "",
     val gameState: String = "invite",
-    val gameBoard: List<Int> = List(42) { 0 }
+    val gameBoard: List<Int> = List(42) { 0 },
+    val currentPlayerID : String =""
 )
 
 
