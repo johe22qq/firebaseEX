@@ -29,6 +29,8 @@ import androidx.navigation.NavController
 @Composable
 fun MainScreen(navController: NavController, model: GameModel, gameId: String?) { //
 
+
+
     if (gameId == null) {
         return
     }
@@ -39,14 +41,27 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
         }
     }
 
+
     Image(
         painter = painterResource(id = R.drawable.bord),
         contentDescription = "bord",
         modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop)
+        contentScale = ContentScale.Crop
+    )
+    currentGame.value?.let { game ->
+        val currentPlayerName = if (game.currentPlayerID == game.player1Id) {
+            game.player1Id
+        } else {
+            game.player2Id
+        }
+
+        Text(
+            text = "$currentPlayerName tur",
+            modifier = Modifier.padding(18.dp)
+        )
+        }
 
     val cells = List(42) { it }
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(6),
         modifier = Modifier
@@ -100,19 +115,10 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
 
                 }
 
-                /*
-                Image(
-                    painter = painterResource(id = R.drawable.trabakrund),
-                    contentDescription = "trabackrund",
-                    modifier = Modifier.fillMaxSize(),
-                    // Modifier.size(20.dp)
-
-
-                )
-
-                 */
             }
+
         }
+
     }
 }
 fun clickHandler(cell: Int, gameId: String, model: GameModel, game: Game) {
@@ -132,6 +138,8 @@ fun clickHandler(cell: Int, gameId: String, model: GameModel, game: Game) {
 
     val nextPlayerId = if (game.currentPlayerID == game.player1Id) game.player2Id else game.player1Id
     model.updateBoard(gameId, updatedBoard, nextPlayerId)
+
+    // kolla winnare
 }
 
 

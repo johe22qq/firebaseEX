@@ -2,20 +2,10 @@ package com.example.firebase
 
 import androidx.compose.runtime.Composable
 
-@Composable
-fun ValidWinMoves(){
 
-
-}
 @Composable
 fun DoWeHaveAwinner(){
-
+// kolla vinnare
 }
 
-@Composable
-fun endGame() {
-
-
-
-}
 

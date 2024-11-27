@@ -9,5 +9,6 @@ data class Player(
     )
 fun addScore(score: Int){
 
-    // till senare
+    // om en spelare vinner så ska den adda score till databasen kopplat till den personen,
+    // då kan vi senare visa leaderboard vem som vunnit flest matcher
 }
