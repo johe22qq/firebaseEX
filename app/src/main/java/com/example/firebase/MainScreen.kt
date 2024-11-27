@@ -77,7 +77,23 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                             contentScale = ContentScale.Crop
 
                             )
+                    }else if(cellVal == 2){
+                        Image(
+                           painter = painterResource(id = R.drawable.blue),
+                           contentDescription = "Bild på blå spelpjäs",
+                           modifier = Modifier.fillMaxSize(),
+                           contentScale = ContentScale.Crop
+
+                           )
+                    } else {
+                        Image(
+                            painter = painterResource(id = R.drawable.trabakrund),
+                            contentDescription = "Bild på trä",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
                         )
+
+
                     }
 
                 }
