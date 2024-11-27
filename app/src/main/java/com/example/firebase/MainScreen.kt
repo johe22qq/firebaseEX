@@ -29,7 +29,15 @@ import androidx.navigation.NavController
 @Composable
 fun MainScreen(navController: NavController, model: GameModel, gameId: String?) { //
 
-
+    if (gameId == null) {
+        return
+    }
+    val currentGame = remember { mutableStateOf<Game?>(null) }
+    LaunchedEffect(gameId) {
+        model.observer(gameId) { updatedGame ->
+            currentGame.value = updatedGame
+        }
+    }
 
     Image(
         painter = painterResource(id = R.drawable.bord),
@@ -49,7 +57,9 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                 modifier = Modifier
                     .size(60.dp)
                     .clickable {
-                        //
+                        currentGame.value?.let { game ->
+                            clickHandler(cell, gameId, model, game)
+                        }
                     }
                     .border(2.dp, Color.Black),
                 contentAlignment = Alignment.Center
@@ -64,7 +74,21 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
         }
     }
 }
-fun clickHandler()
+fun clickHandler(cell: Int, gameId: String, model: GameModel, game: Game) {
+
+    if (game.gameBoard[cell] != 0) {
+        return
+    }
+    val updatedBoard = game.gameBoard.toMutableList()
+    if (game.currentPlayerID == game.player1Id) {
+        updatedBoard[cell] = 1
+    } else {
+        updatedBoard[cell] = 2
+    }
+
+    val nextPlayerId = if (game.currentPlayerID == game.player1Id) game.player2Id else game.player1Id
+    model.updateBoard(gameId, updatedBoard, nextPlayerId)
+}
 
 
 
