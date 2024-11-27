@@ -25,6 +25,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.delay
+
 
 @Composable
 fun MainScreen(navController: NavController, model: GameModel, gameId: String?) { //
@@ -34,10 +36,28 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
     if (gameId == null) {
         return
     }
+
     val currentGame = remember { mutableStateOf<Game?>(null) }
+
+
     LaunchedEffect(gameId) {
         model.observer(gameId) { updatedGame ->
             currentGame.value = updatedGame
+
+            val winner = DoWeHaveAwinner(updatedGame.gameBoard)
+            if (winner != null) {
+                model.db.collection("games").document(gameId).update(
+                    mapOf(
+                        "gameState" to "ended",
+                        "winnerID" to if (winner == 1) updatedGame.player1Id else updatedGame.player2Id
+
+
+                    )
+                )
+
+                navController.navigate("LeaderboardScreen")
+
+            }
         }
     }
 
@@ -121,6 +141,8 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
 
     }
 }
+
+
 fun clickHandler(cell: Int, gameId: String, model: GameModel, game: Game) {
 
     if (game.gameBoard[cell] != 0) {
@@ -139,8 +161,8 @@ fun clickHandler(cell: Int, gameId: String, model: GameModel, game: Game) {
     val nextPlayerId = if (game.currentPlayerID == game.player1Id) game.player2Id else game.player1Id
     model.updateBoard(gameId, updatedBoard, nextPlayerId)
 
-    // kolla winnare
 }
+
 
 
 

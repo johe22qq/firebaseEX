@@ -1,9 +1,9 @@
 package com.example.firebase
 
 import androidx.compose.runtime.Composable
+import kotlinx.coroutines.delay
 
 
-@Composable
 fun DoWeHaveAwinner(board: List<Int>): Int? {
 
     val ValdidWinMoves = listOf(
@@ -18,6 +18,7 @@ fun DoWeHaveAwinner(board: List<Int>): Int? {
     for (wins in ValdidWinMoves) {
         val (a, b, c, d) = wins
         if (board[a] != 0 && board[a] == board[b] && board[a] == board[c] && board[a] == board[d]) {
+
             return board[a]
         }
     }
