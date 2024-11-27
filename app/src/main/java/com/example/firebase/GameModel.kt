@@ -13,6 +13,7 @@ class GameModel: ViewModel() {
     val gameMap = MutableStateFlow<Map<String, Game>>(emptyMap())
 
 
+
     fun initGame() {
 
         db.collection("players")
@@ -41,7 +42,20 @@ class GameModel: ViewModel() {
                 }
             }
     }
-
+    fun observer(gameId: String, onGameUpdated: (Game) -> Unit) { // void
+        db.collection("games").document(gameId)
+            .addSnapshotListener { snapshot, error -> // enskilt spel
+                if (error != null) {
+                    return@addSnapshotListener
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    val game = snapshot.toObject(Game::class.java)
+                    if (game != null) {
+                        onGameUpdated(game)
+                    }
+                }
+            }
+    }
 }
 
 

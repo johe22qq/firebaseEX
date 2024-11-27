@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 fun MainScreen(navController: NavController, model: GameModel, gameId: String?) { //
 
 
+
     Image(
         painter = painterResource(id = R.drawable.bord),
         contentDescription = "bord",
@@ -48,7 +49,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                 modifier = Modifier
                     .size(60.dp)
                     .clickable {
-                        println("blabla test")
+                        //
                     }
                     .border(2.dp, Color.Black),
                 contentAlignment = Alignment.Center
@@ -63,10 +64,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
         }
     }
 }
-
-fun handleClick() {
-
-}
+fun clickHandler()
 
 
 
