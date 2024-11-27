@@ -44,23 +44,25 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
         model.observer(gameId) { updatedGame ->
             currentGame.value = updatedGame
 
+
             val winner = DoWeHaveAwinner(updatedGame.gameBoard)
             if (winner != null) {
+
+                val winnerId = if (winner == 1) updatedGame.player1Id else updatedGame.player2Id// placerar utanför för att addscore ska komma åt
+
                 model.db.collection("games").document(gameId).update(
                     mapOf(
                         "gameState" to "ended",
-                        "winnerID" to if (winner == 1) updatedGame.player1Id else updatedGame.player2Id
-
-
+                        "winnerID" to winnerId
                     )
                 )
 
+                addScore(winnerId)
                 navController.navigate("LeaderboardScreen")
-
             }
+
         }
     }
-
 
     Image(
         painter = painterResource(id = R.drawable.bord),

@@ -1,5 +1,8 @@
 package com.example.firebase
 
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+
 data class Player(
     var playerID: String = "",
     var name: String = "",
@@ -7,8 +10,13 @@ data class Player(
     var score: Int = 0
 
     )
-fun addScore(score: Int){
+fun addScore(playerId: String) {
 
-    // om en spelare vinner så ska den adda score till databasen kopplat till den personen,
-    // då kan vi senare visa leaderboard vem som vunnit flest matcher
+    val player = Firebase.firestore.collection("players").document(playerId)
+    player.get().addOnSuccessListener { document ->
+        if (document != null && document.exists()) {
+            val currentScore = document.getLong("score")?.toInt() ?: 0 // i databasen lagras "number" som en long
+            player.update("score", currentScore + 1)
+        }
+    }
 }
