@@ -59,7 +59,9 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                     .size(60.dp)
                     .clickable {
                         currentGame.value?.let { game ->
-                            clickHandler(cell, gameId, model, game)
+                            if(game.currentPlayerID == model.localPlayerId.value) {
+                                clickHandler(cell, gameId, model, game)
+                            }
                         }
                     }
                     .border(2.dp, Color.Black),
@@ -116,6 +118,9 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
 fun clickHandler(cell: Int, gameId: String, model: GameModel, game: Game) {
 
     if (game.gameBoard[cell] != 0) {
+        return
+    }
+    if (game.currentPlayerID != model.localPlayerId.value) {
         return
     }
     val updatedBoard = game.gameBoard.toMutableList()
