@@ -46,6 +46,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
         contentScale = ContentScale.Crop)
 
     val cells = List(42) { it }
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(6),
         modifier = Modifier
@@ -64,12 +65,34 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                     .border(2.dp, Color.Black),
                 contentAlignment = Alignment.Center
             ) {
+
+                currentGame.value?.let { game ->
+                    val cellVal = game.gameBoard[cell]
+
+                    if(cellVal == 1){
+                        Image(
+                            painter = painterResource(id = R.drawable.red),
+                            contentDescription = "Bild på röd spelpjäls",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+
+                            )
+                        )
+                    }
+
+                }
+
+                /*
                 Image(
                     painter = painterResource(id = R.drawable.trabakrund),
                     contentDescription = "trabackrund",
                     modifier = Modifier.fillMaxSize(),
                     // Modifier.size(20.dp)
+
+
                 )
+
+                 */
             }
         }
     }
