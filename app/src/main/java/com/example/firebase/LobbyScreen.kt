@@ -99,6 +99,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                 }
 
 //------------------------------------------ANVÄNDER KODEN IFRÅN LEADERBOARD---------------------------------------
+/*
                 var players by remember { mutableStateOf<List<Player>>(emptyList()) }
 
                 LaunchedEffect(Unit) {
@@ -125,7 +126,9 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                     }
                 }
 
+ */
 //---------------------------------------------------------------------------------------------------------------------------
+
 
                 games.forEach { (gameId, game) ->
 
@@ -165,8 +168,11 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
 
                     )
             }
+
         }
+
     )
+
 }
 
     /*

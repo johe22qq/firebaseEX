@@ -78,29 +78,26 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
         contentScale = ContentScale.Crop
     )
     currentGame.value?.let { game ->
-        val currentPlayerName = if (game.currentPlayerID == game.player1Id) {
-            game.player1Id
-        } else {
-            game.player2Id
-        }
+
+        val currentPlayerName = model.playerMap.value[game.currentPlayerID]?.name
 
         Text(
-            text = "$currentPlayerName tur",
+            text = "$currentPlayerName s tur",
             modifier = Modifier.padding(18.dp)
         )
-        }
+    }
 
     val cells = List(42) { it }
     LazyVerticalGrid(
         columns = GridCells.Fixed(7),
         modifier = Modifier
             .size(1000.dp)
-            .padding(top = 280.dp, start = 14.dp, end = 14.dp),
+            .padding(top = 260.dp, start = 14.dp, end = 14.dp),
     ) {
         items(cells) { cell ->
             Box(
                 modifier = Modifier
-                    .size(60.dp)
+                    .size(70.dp)
                     .clickable {
                         currentGame.value?.let { game ->
                             if(game.currentPlayerID == model.localPlayerId.value) {
