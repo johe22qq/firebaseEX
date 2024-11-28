@@ -10,6 +10,8 @@ data class Player(
     var score: Int = 0
 
     )
+
+
 fun addScore(playerId: String) {
 
     val player = Firebase.firestore.collection("players").document(playerId)

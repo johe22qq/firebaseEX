@@ -33,8 +33,8 @@ fun StartScreen(navController: NavController) {
     )
 
     Text(
-        "TicTacToe",
-        modifier = Modifier.padding(start = 65.dp, top = 70.dp),
+        "Connect-4",
+        modifier = Modifier.padding(start = 55.dp, top = 70.dp),
         style = MaterialTheme.typography.displayLarge,
 
     )
