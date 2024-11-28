@@ -45,11 +45,11 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
             currentGame.value = updatedGame
 
 
-            val winner = DoWeHaveAwinner(updatedGame.gameBoard)
+            val winner = DoWeHaveAWinner(updatedGame.gameBoard)
             if (winner != null) {
 
                 val winnerId = if (winner == 1) updatedGame.player1Id else updatedGame.player2Id// placerar utanför för att addscore ska komma åt
-
+//fixa draw
                 model.db.collection("games").document(gameId).update(
                     mapOf(
                         "gameState" to "ended",
@@ -58,6 +58,18 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                 )
 
                 addScore(winnerId)
+                navController.navigate("LeaderboardScreen")
+                return@observer
+            }
+
+            val isDraw = updatedGame.gameBoard.all { it != 0 }
+            if (isDraw) {
+                model.db.collection("games").document(gameId).update(
+                    mapOf(
+                        "gameState" to "ended",
+                        "winnerID" to "draw"
+                    )
+                )
                 navController.navigate("LeaderboardScreen")
             }
 
