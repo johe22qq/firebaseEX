@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -95,6 +97,35 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                 ) {
                     Text("SEND CHALLENGE")
                 }
+
+//------------------------------------------ANVÄNDER KODEN IFRÅN LEADERBOARD---------------------------------------
+                var players by remember { mutableStateOf<List<Player>>(emptyList()) }
+
+                LaunchedEffect(Unit) {
+                    GetAllPlayers(model) { listOFplayers ->
+                        players = listOFplayers
+
+                    }
+
+                }
+                LazyColumn (
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                ) {
+                    items(players) { player ->
+                        Text(
+                            text = player.name,
+                            modifier = Modifier
+                                .padding(10.dp)
+
+
+                        )
+
+                    }
+                }
+
+//---------------------------------------------------------------------------------------------------------------------------
 
                 games.forEach { (gameId, game) ->
 
