@@ -27,11 +27,11 @@ fun DoWeHaveAwinner(board: List<Int>): Int? {
         listOf(6, 13, 20, 27), listOf(7, 14, 16, 23), listOf(8, 15, 17, 24),
         listOf(11, 16, 21, 26), listOf(10, 15, 20, 25), listOf(10, 14, 19, 24),
 
+        listOf(12, 19, 26, 33), listOf(13, 20, 27, 34), listOf(14, 21, 28, 35),
+        listOf(17, 22, 27, 32), listOf(16, 21, 26, 31), listOf(15, 20, 25, 30),
 
-
-
-
-
+        listOf(18, 25, 32, 39), listOf(19, 26, 33, 40), listOf(19, 27, 34, 41),
+        listOf(23, 28, 33, 38), listOf(22, 27, 32, 37), listOf(21, 26, 31, 36),
 
     )
 
