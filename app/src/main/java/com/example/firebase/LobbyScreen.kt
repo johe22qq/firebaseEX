@@ -2,6 +2,9 @@ package com.example.firebase
 
 import android.content.Context
 import android.graphics.Color
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +23,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
@@ -43,6 +48,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
     var opponentName by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
 
+
     Scaffold(
         content = { innerPadding ->
             Column(
@@ -50,6 +56,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                     .fillMaxSize()
                     .padding(innerPadding)
                     .padding(25.dp)
+
             ) {
                 Text("ENTER OPONANTS NAME")
                 OutlinedTextField(
