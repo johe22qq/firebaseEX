@@ -36,6 +36,10 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
         LocalContext.current.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
             .getString("playerId", "")
 
+    if (!sharedPreferences.isNullOrEmpty()) {
+        model.localPlayerId.value = sharedPreferences
+    }
+
     var opponentName by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
 
@@ -61,11 +65,18 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                                 model.playerMap.value.entries.find { it.value.name == opponentName }
                             if (opponent != null) {
 
+                                val gameID = model.localGameId.value
+                                if(gameID == null){
+                                    model.localGameId.value = model.db.collection("games").document().id
+                                }
+                                val VisiblegameID = model.localGameId.value!!
+
                                 model.db.collection("games").add(
                                     Game(
                                         gameState = "invite",
                                         player1Id = model.localPlayerId.value!!,
-                                        player2Id = opponent.key
+                                        player2Id = opponent.key,
+                                        gameId = VisiblegameID
                                     )
                                 )
                             }

@@ -11,6 +11,7 @@ class GameModel: ViewModel() {
     var localPlayerId = mutableStateOf<String?>(null)
     val playerMap = MutableStateFlow<Map<String, Player>>(emptyMap())
     val gameMap = MutableStateFlow<Map<String, Game>>(emptyMap())
+    var localGameId = mutableStateOf<String?>(null)
 
 
 
