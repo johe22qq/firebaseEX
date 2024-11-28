@@ -3,9 +3,6 @@ package com.example.firebase
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.delay
 
-
-
-
 fun DoWeHaveAWinner(board: List<Int>): Int? {
 
     val ValidWinMoves = listOf(
@@ -41,10 +38,8 @@ fun DoWeHaveAWinner(board: List<Int>): Int? {
             return board[a]
         }
     }
+
     return null
 }
-
-
-
 
 

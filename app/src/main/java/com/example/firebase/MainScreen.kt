@@ -39,7 +39,6 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
 
     val currentGame = remember { mutableStateOf<Game?>(null) }
 
-
     LaunchedEffect(gameId) {
         model.observer(gameId) { updatedGame ->
             currentGame.value = updatedGame
@@ -47,16 +46,13 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
 
             val winner = DoWeHaveAWinner(updatedGame.gameBoard)
             if (winner != null) {
-
-                val winnerId = if (winner == 1) updatedGame.player1Id else updatedGame.player2Id// placerar utanför för att addscore ska komma åt
-//fixa draw
+                val winnerId = if (winner == 1) updatedGame.player1Id else updatedGame.player2Id
                 model.db.collection("games").document(gameId).update(
                     mapOf(
                         "gameState" to "ended",
                         "winnerID" to winnerId
                     )
                 )
-
                 addScore(winnerId)
                 navController.navigate("LeaderboardScreen")
                 return@observer
@@ -72,7 +68,6 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                 )
                 navController.navigate("LeaderboardScreen")
             }
-
         }
     }
 
@@ -97,10 +92,10 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
 
     val cells = List(42) { it }
     LazyVerticalGrid(
-        columns = GridCells.Fixed(6),
+        columns = GridCells.Fixed(7),
         modifier = Modifier
             .size(1000.dp)
-            .padding(top = 230.dp, start = 14.dp, end = 14.dp),
+            .padding(top = 280.dp, start = 14.dp, end = 14.dp),
     ) {
         items(cells) { cell ->
             Box(
