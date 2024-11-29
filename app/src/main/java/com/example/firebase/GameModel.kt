@@ -2,9 +2,13 @@ package com.example.firebase
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.MutableStateFlow
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class GameModel: ViewModel() {
     val db = Firebase.firestore
@@ -67,7 +71,15 @@ class GameModel: ViewModel() {
                 )
             )
     }
+    fun GameEnding(navController: NavController) {
+        viewModelScope.launch {
+            delay(5000)
+            navController.navigate("LeaderboardScreen")
+        }
+    }
+
 }
+
 
 
 

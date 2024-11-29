@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 
@@ -61,8 +62,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                 addScore(winnerId)
                 winnerMessage= "$winnerName vann!"
 
-             //   delay(3000)
-                navController.navigate("LeaderboardScreen")
+                model.GameEnding(navController)
                 return@observer
             }
 
@@ -75,9 +75,8 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                     )
                 )
                 winnerMessage ="oavgjort, bra spelat! "
+                model.GameEnding(navController)
 
-            //    delay(3000)
-                navController.navigate("LeaderboardScreen")
 
                 //
             }
@@ -91,6 +90,19 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
         modifier = Modifier.fillMaxSize(),
         contentScale = ContentScale.Crop
     )
+
+    if (!winnerMessage.isNullOrBlank()) {
+        Text(
+            text = winnerMessage!!,
+            color = Color.Green,
+            fontSize = 24.sp,
+            modifier = Modifier
+                .padding(top=30.dp)
+                .padding(start = 70.dp)
+
+        )
+    }
+
     currentGame.value?.let { game ->
 
         val currentPlayerName = model.playerMap.value[game.currentPlayerID]?.name
