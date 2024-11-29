@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,11 +26,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
 
@@ -75,8 +80,9 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                             if (opponent != null) {
 
                                 val gameID = model.localGameId.value
-                                if(gameID == null){
-                                    model.localGameId.value = model.db.collection("games").document().id
+                                if (gameID == null) {
+                                    model.localGameId.value =
+                                        model.db.collection("games").document().id
                                 }
                                 val VisiblegameID = model.localGameId.value!!
 
@@ -89,7 +95,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                                     )
                                 )
                             }
-                        }else{
+                        } else {
                             errorMessage = "DET FINNS INGEN SPELARE MED DET NAMNET "
                         }
                     },
@@ -99,34 +105,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                 }
 
 //------------------------------------------ANVÄNDER KODEN IFRÅN LEADERBOARD---------------------------------------
-/*
-                var players by remember { mutableStateOf<List<Player>>(emptyList()) }
-
-                LaunchedEffect(Unit) {
-                    GetAllPlayers(model) { listOFplayers ->
-                        players = listOFplayers
-
-                    }
-
-                }
-                LazyColumn (
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    items(players) { player ->
-                        Text(
-                            text = player.name,
-                            modifier = Modifier
-                                .padding(10.dp)
-
-
-                        )
-
-                    }
-                }
-
- */
+                DisplayAllPlayers(navController)
 //---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -175,70 +154,60 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
 
 }
 
-    /*
-    behöver göra om denna helt,
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+//samma kod som i leaderbord fast utan points
+@Composable
+fun DisplayAllPlayers(navController: NavController) {
 
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
+
+    var players by remember { mutableStateOf<List<Player>>(emptyList()) }
+
+    LaunchedEffect(Unit) {
+        GetAllPlayers() { listOFplayers ->
+            players = listOFplayers.sortedByDescending { it.score }
+
+        }
+
+    }
+
+    Column(
+        modifier = Modifier
+            // .fillMaxSize()
+            .padding(20.dp),
+
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
+
+
+    ) {
+
+
+        LazyColumn(
+            modifier = Modifier
+                // .fillMaxSize()
+                .padding(16.dp)
+
+        ) {
             items(players) { player ->
-                ListItem(
-                    headlineContent = {
-                        Text("Name: ${player.name}")
-                    },
-                    supportingContent = {
-                        Text("Status: ${player.status}")
-                    },
-                    trailingContent = {
-                        Button(onClick = {
-                            val query = db.collection("players").whereEqualTo("playerID", player.playerID)
-                            query.get().addOnSuccessListener { querySnapshot ->
-                                for (documentSnapshot in querySnapshot) {
-                                    if (player.status == "online") {
-                                        documentSnapshot.reference.update("status", "offline")
-                                    } else {
-                                        documentSnapshot.reference.update("status", "online")
-                                    }
-                                }
-                            }
-
-
-                        }) {
-                            Text("UPPDATE STATUS")
-                        }
-                    }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                        .border(2.dp, color = androidx.compose.ui.graphics.Color.Black)
+                        .background(color = LightGray)
                 )
-            }
-        }
 
-        if(!AreOnline.value){
-            Text(
-                text = "Waiting for both player to connect......",
-                modifier = Modifier.padding(top = 200.dp, start = 16.dp)
-            )
-        }
-        if(AreOnline.value){
-            Button(
+                {
 
-                onClick = {
-
-                    navController.navigate("MainScreen") // nu kan vi navigera
-
-                },
-                modifier = Modifier
-                    .padding(start = 145.dp)
-                    .padding(top = 310.dp)
-
-            ) {
-                Icon(
-                    painter = painterResource(id= R.drawable.baseline_play_arrow_24),
-                    contentDescription ="starta spel knapp",
-                    modifier = Modifier.size(90.dp)
-                )
-               // Text("STARTA SPELET")
-
+                    Text(
+                        text = player.name,
+                        modifier = Modifier
+                            .padding(10.dp)
+                    )
+                }
             }
         }
     }
+
 }
-/*
-     */
+
+
