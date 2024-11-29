@@ -17,7 +17,7 @@ fun ScreenNavigation(navController: NavHostController, model: GameModel) {
         startDestination = "StartScreen"
     ) {
         composable("LobbyScreen") { LobbyScreen(navController,model) }
-        composable("LeaderboardScreen") { LeaderboardScreen(model,navController) }
+        composable("LeaderboardScreen") { LeaderboardScreen(navController) }
 
 
         composable("MainScreen/{gameId}") { backStackEntry ->

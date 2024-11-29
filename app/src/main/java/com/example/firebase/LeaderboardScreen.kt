@@ -1,9 +1,13 @@
 package com.example.firebase
 
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,6 +22,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -25,9 +31,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-fun GetAllPlayers(model: GameModel, listOFplayers: (List<Player>) -> Unit) {
+fun GetAllPlayers(listOFplayers: (List<Player>) -> Unit) {
 
-    val player = Firebase.firestore.collection("players")
+    Firebase.firestore.collection("players")
         .get()
         .addOnSuccessListener { querySnapshot ->
             val players = querySnapshot.documents.mapNotNull { document ->
@@ -41,13 +47,13 @@ fun GetAllPlayers(model: GameModel, listOFplayers: (List<Player>) -> Unit) {
 }
 
 @Composable
-fun LeaderboardScreen(model: GameModel, navController: NavController) {
+fun LeaderboardScreen(navController: NavController) {
 
     var players by remember { mutableStateOf<List<Player>>(emptyList()) }
 
     LaunchedEffect(Unit) {
-        GetAllPlayers(model) { listOFplayers ->
-            players = listOFplayers
+        GetAllPlayers() { listOFplayers ->
+            players = listOFplayers.sortedByDescending { it.score }
 
         }
 
@@ -72,13 +78,22 @@ fun LeaderboardScreen(model: GameModel, navController: NavController) {
 
         ) {
             items(players) { player ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                        .border(2.dp, color = Color.Black)
+                        .background(color = LightGray)
+                )
+
+                {
+
                 Text(
                     text = "${player.name}: ${player.score}",
                     modifier = Modifier
                         .padding(10.dp)
-
-
                 )
+                }
             }
         }
         Button(
