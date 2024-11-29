@@ -1,5 +1,6 @@
 package com.example.firebase
 
+import android.app.GameState
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
@@ -16,8 +17,10 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +41,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
     }
 
     val currentGame = remember { mutableStateOf<Game?>(null) }
+    var winnerMessage by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(gameId) {
         model.observer(gameId) { updatedGame ->
@@ -47,6 +51,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
             val winner = DoWeHaveAWinner(updatedGame.gameBoard)
             if (winner != null) {
                 val winnerId = if (winner == 1) updatedGame.player1Id else updatedGame.player2Id
+                val winnerName = model.playerMap.value[winnerId]?.name
                 model.db.collection("games").document(gameId).update(
                     mapOf(
                         "gameState" to "ended",
@@ -54,11 +59,14 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                     )
                 )
                 addScore(winnerId)
+                winnerMessage= "$winnerName vann!"
+
+             //   delay(3000)
                 navController.navigate("LeaderboardScreen")
                 return@observer
             }
 
-            val isDraw = updatedGame.gameBoard.all { it != 0 }
+            val isDraw = updatedGame.gameBoard.all { it != 0 } // all kollar om alla i listan inte är 0, då har vi placerat ut alla och vi har ingen winnare
             if (isDraw) {
                 model.db.collection("games").document(gameId).update(
                     mapOf(
@@ -66,9 +74,15 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                         "winnerID" to "draw"
                     )
                 )
+                winnerMessage ="oavgjort, bra spelat! "
+
+            //    delay(3000)
                 navController.navigate("LeaderboardScreen")
+
+                //
             }
         }
+
     }
 
     Image(
