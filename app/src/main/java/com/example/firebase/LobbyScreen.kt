@@ -33,6 +33,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
@@ -91,7 +92,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                                 )
                             }
                         } else {
-                            errorMessage = "DET FINNS INGEN SPELARE MED DET NAMNET "
+                            errorMessage = "THERE IS NO PLAYER WITH THAT NAME  "
                         }
                     },
                     modifier = Modifier.fillMaxWidth()
@@ -114,7 +115,11 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                         }
                     }
                     if (game.player2Id == model.localPlayerId.value && game.gameState == "invite") {
-                        Text("CHALLENGE FROM: ${model.playerMap.value[game.player1Id]?.name}")
+                        Text(
+                            "CHALLENGE FROM: ${model.playerMap.value[game.player1Id]?.name}",
+                            fontSize = 25.sp
+
+                        )
                         Button(
                             onClick = {
                                 model.db.collection("games").document(gameId)
@@ -164,7 +169,7 @@ fun DisplayAllPlayers(model: GameModel) {
         LazyColumn(
             modifier = Modifier
                 .padding(16.dp)
-                .height(400.dp)
+                .height(500.dp)
         ) {
             items(players.values.sortedByDescending { it.score }) { player ->
                 Box(
@@ -176,8 +181,10 @@ fun DisplayAllPlayers(model: GameModel) {
                 ) {
                     Text(
                         text = player.name,
+                        fontSize = 15.sp,
                         modifier = Modifier
                             .padding(10.dp)
+
                     )
                 }
             }

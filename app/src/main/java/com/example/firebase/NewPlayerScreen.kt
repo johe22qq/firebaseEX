@@ -87,7 +87,7 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
                             }
                         }
                 }else{
-                    errorMessage = "DU MÅSTE HA ETT NAMN FÖR ATT SPELA DETTA SPEL, PASSAR DET INTE KAN DU SPELA TEMPLE-RUN "
+                    errorMessage = "YOU NEED A NAME TO PLAY THIS GAME, IF REFUSE YOU CAN PLAY TEMPLE RUN INSTEAD  "
                 }
             },
             modifier = Modifier

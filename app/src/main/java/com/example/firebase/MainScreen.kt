@@ -2,10 +2,12 @@ package com.example.firebase
 
 import android.app.GameState
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -60,7 +63,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                     )
                 )
                 addScore(winnerId)
-                winnerMessage= "$winnerName vann!"
+                winnerMessage= " AND THE WINNER IS.. $winnerName "
 
                 model.GameEnding(navController)
                 return@observer
@@ -74,7 +77,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                         "winnerID" to "draw"
                     )
                 )
-                winnerMessage ="oavgjort, bra spelat! "
+                winnerMessage ="TIE "
                 model.GameEnding(navController)
 
 
@@ -92,25 +95,44 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
     )
 
     if (!winnerMessage.isNullOrBlank()) {
+
+        Column (
+
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+
         Text(
             text = winnerMessage!!,
-            color = Color.Green,
+            color = Color.Black,
             fontSize = 24.sp,
             modifier = Modifier
-                .padding(top=30.dp)
-                .padding(start =120.dp)
-
+                .padding(top=800.dp)
+                .border(3.dp, color=Black)
+                .background(color = Color.Green)
         )
+    }
     }
 
     currentGame.value?.let { game ->
 
         val currentPlayerName = model.playerMap.value[game.currentPlayerID]?.name
+        Column (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(7.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
         Text(
-            text = "$currentPlayerName s tur",
-            modifier = Modifier.padding(18.dp)
+            text = "$currentPlayerName:S TURN",
+            fontSize = 25.sp,
+            modifier = Modifier
+                .padding(18.dp),
         )
+    }
     }
 
     val cells = List(42) { it }
