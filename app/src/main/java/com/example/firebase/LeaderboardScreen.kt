@@ -38,7 +38,7 @@ fun GetAllPlayers(model: GameModel, listOFplayers: (List<Player>) -> Unit) {
 }
 
 @Composable
-fun LeaderboardScreen(model: GameModel) {
+fun LeaderboardScreen(model: GameModel, navController: NavController) {
 
     var players by remember { mutableStateOf<List<Player>>(emptyList()) }
 
@@ -62,12 +62,24 @@ fun LeaderboardScreen(model: GameModel) {
 
 
             )
+    }
+}
+    Button(
+        onClick = {
+            navController.navigate("LobbyScreen")
+        },
+
+        modifier = Modifier
+            .padding(top=300.dp)
+            .padding(start = 70.dp)
+
+
+
+    ) {
+        Text("Gå till lobbyn och spela igen! ")
+
 
     }
-
-
-
-}
 
 
 }

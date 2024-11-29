@@ -98,7 +98,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
             fontSize = 24.sp,
             modifier = Modifier
                 .padding(top=30.dp)
-                .padding(start = 70.dp)
+                .padding(start =120.dp)
 
         )
     }
