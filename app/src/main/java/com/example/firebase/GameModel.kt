@@ -61,6 +61,7 @@ class GameModel: ViewModel() {
                 }
             }
     }
+
     fun updateBoard(gameId: String, updatedBoard: List<Int>, nextPlayerId: String) {
 
         db.collection("games").document(gameId)
@@ -79,6 +80,8 @@ class GameModel: ViewModel() {
     }
 
 }
+
+
 
 
 

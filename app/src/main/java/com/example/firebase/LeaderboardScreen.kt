@@ -82,7 +82,7 @@ fun LeaderboardScreen(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
-                        .border(2.dp, color = Color.Black)
+                        .border(2.dp, color = Color.Green)
                         .background(color = LightGray)
                 )
 

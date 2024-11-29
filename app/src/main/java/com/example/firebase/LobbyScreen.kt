@@ -75,23 +75,18 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                 Button(
                     onClick = {
                         if (opponentName.isNotBlank()) {
-                            val opponent =
-                                model.playerMap.value.entries.find { it.value.name == opponentName }
+                            val opponent = model.playerMap.value.entries.find { it.value.name == opponentName }
                             if (opponent != null) {
 
-                                val gameID = model.localGameId.value
-                                if (gameID == null) {
-                                    model.localGameId.value =
-                                        model.db.collection("games").document().id
-                                }
-                                val VisiblegameID = model.localGameId.value!!
+                                val gameID = model.localGameId.value ?: model.db.collection("games").document().id
+                                model.localGameId.value = gameID
 
                                 model.db.collection("games").add(
                                     Game(
                                         gameState = "invite",
                                         player1Id = model.localPlayerId.value!!,
                                         player2Id = opponent.key,
-                                        gameId = VisiblegameID
+                                        gameId = gameID
                                     )
                                 )
                             }
@@ -105,7 +100,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                 }
 
 //------------------------------------------ANVÄNDER KODEN IFRÅN LEADERBOARD---------------------------------------
-                DisplayAllPlayers(navController)
+                DisplayAllPlayers(model = model)
 //---------------------------------------------------------------------------------------------------------------------------
 
 
@@ -156,48 +151,29 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
 
 //samma kod som i leaderbord fast utan points
 @Composable
-fun DisplayAllPlayers(navController: NavController) {
+fun DisplayAllPlayers(model: GameModel) {
 
-
-    var players by remember { mutableStateOf<List<Player>>(emptyList()) }
-
-    LaunchedEffect(Unit) {
-        GetAllPlayers() { listOFplayers ->
-            players = listOFplayers.sortedByDescending { it.score }
-
-        }
-
-    }
+    val players by model.playerMap.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
-            // .fillMaxSize()
             .padding(20.dp),
-
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
-
-
     ) {
-
-
         LazyColumn(
             modifier = Modifier
-                // .fillMaxSize()
                 .padding(16.dp)
-
+                .height(400.dp)
         ) {
-            items(players) { player ->
+            items(players.values.sortedByDescending { it.score }) { player ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
                         .border(2.dp, color = androidx.compose.ui.graphics.Color.Black)
                         .background(color = LightGray)
-                )
-
-                {
-
+                ) {
                     Text(
                         text = player.name,
                         modifier = Modifier
@@ -207,7 +183,8 @@ fun DisplayAllPlayers(navController: NavController) {
             }
         }
     }
-
 }
+
+
 
 

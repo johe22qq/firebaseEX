@@ -17,19 +17,16 @@ fun DoWeHaveAWinner(board: List<Int>): Int? {
         listOf(8, 15, 22, 29), listOf(15, 22, 29, 36), listOf(2, 9, 16, 23), listOf(9, 16, 23, 30),
         listOf(16, 23, 30, 37), listOf(3, 10, 17, 24), listOf(10, 17, 24, 31), listOf(17, 24, 31, 38),
         listOf(4, 11, 18, 25), listOf(11, 18, 25, 32), listOf(18, 25, 32, 39), listOf(5, 12, 19, 26),
-        listOf(12, 19, 26, 33), listOf(19, 26, 33, 40), listOf(6, 13, 20, 27), listOf(13, 20, 27, 34),
+        listOf(12, 19, 26, 33), listOf(19, 26, 33, 40), listOf(6, 13, 20, 27), listOf(13, 20, 27, 34), listOf(20, 27, 34, 41),
 
-        listOf(0, 7, 14, 21), listOf(1, 8, 15, 22), listOf(2, 9, 16, 23),
-        listOf(5, 10, 15, 20), listOf(4, 9, 14, 21), listOf(3, 8, 13, 20),
+        listOf(0, 8, 16, 24), listOf(1, 9, 17, 25), listOf(2, 10, 18, 26), listOf(3, 11, 19, 27),
+        listOf(7, 15, 23, 31), listOf(8, 16, 24, 32), listOf(9, 17, 25, 33), listOf(10, 18, 26, 34),
+        listOf(14, 22, 30, 38), listOf(15, 23, 31, 39), listOf(16, 24, 32, 40), listOf(17, 25, 33, 41),
 
-        listOf(6, 13, 20, 27), listOf(7, 14, 21, 28), listOf(8, 15, 22, 29),
-        listOf(11, 16, 21, 26), listOf(10, 15, 20, 25), listOf(10, 14, 19, 24),
+        listOf(3, 9, 15, 21), listOf(4, 10, 16, 22), listOf(5, 11, 17, 23), listOf(6, 12, 18, 24),
+        listOf(10, 16, 22, 28), listOf(11, 17, 23, 29), listOf(12, 18, 24, 30), listOf(13, 19, 25, 31),
+        listOf(17, 23, 29, 35), listOf(18, 24, 30, 36), listOf(19, 25, 31, 37), listOf(20, 26, 32, 38)
 
-        listOf(12, 19, 26, 33), listOf(13, 20, 27, 34), listOf(14, 21, 28, 35),
-        listOf(17, 22, 27, 32), listOf(16, 21, 26, 31), listOf(15, 20, 25, 30),
-
-        listOf(18, 25, 32, 39), listOf(19, 26, 33, 40), listOf(23, 28, 33, 38),
-        listOf(22, 27, 32, 37), listOf(21, 26, 31, 36)
     )
 
     for (wins in ValidWinMoves) {
