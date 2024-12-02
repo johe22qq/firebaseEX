@@ -62,16 +62,20 @@ class GameModel: ViewModel() {
             }
     }
 
-    fun updateBoard(gameId: String, updatedBoard: List<Int>, nextPlayerId: String) {
+    fun updateBoard(gameId: String, updatedBoard: List<Int>, nextPlayerId: String,nextGameState: String) {
 
         db.collection("games").document(gameId)
             .update(
                 mapOf(
                     "gameBoard" to updatedBoard,
-                    "currentPlayerID" to nextPlayerId
+                    "currentPlayerID" to nextPlayerId,
+                    "gameState" to nextGameState
                 )
             )
     }
+
+
+
     fun GameEnding(navController: NavController) {
         viewModelScope.launch {
             delay(5000)

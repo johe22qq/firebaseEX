@@ -208,14 +208,20 @@ fun clickHandler(cell: Int, gameId: String, model: GameModel, game: Game) {
     val updatedBoard = game.gameBoard.toMutableList()
     if (game.currentPlayerID == game.player1Id) {
         updatedBoard[cell] = 1
+
     } else {
         updatedBoard[cell] = 2
-    }
 
+    }
     val nextPlayerId = if (game.currentPlayerID == game.player1Id) game.player2Id else game.player1Id
-    model.updateBoard(gameId, updatedBoard, nextPlayerId)
+
+    val nextGameState = if (game.currentPlayerID == game.player1Id) "player2_turn" else "player1_turn"
+    model.updateBoard(gameId, updatedBoard, nextPlayerId,nextGameState)
+
 
 }
+
+
 
 
 
