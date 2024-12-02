@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +29,7 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.google.firebase.firestore.ktx.firestore
@@ -52,25 +54,6 @@ fun GetAllPlayers(listOFplayers: (List<Player>) -> Unit) {
 @Composable
 fun LeaderboardScreen(navController: NavController) {
 
-
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(15.dp)
-            .background(color = Green),
-
-        horizontalAlignment = Alignment.CenterHorizontally
-    )
-
-    {
-
-        Text("LEADERBOARD")
-
-
-    }
-
-
     var players by remember { mutableStateOf<List<Player>>(emptyList()) }
 
     LaunchedEffect(Unit) {
@@ -92,11 +75,20 @@ fun LeaderboardScreen(navController: NavController) {
 
     ) {
 
+        Text(
+            text = "LEADERBOARD",
+            fontSize = 25.sp,
+            modifier = Modifier
+                .padding(bottom = 19.dp)
+                .padding(top = 19.dp)
+        )
+
 
         LazyColumn(
             modifier = Modifier
                // .fillMaxSize()
                 .padding(16.dp)
+                .weight(1f)
 
 
         ) {
@@ -125,7 +117,7 @@ fun LeaderboardScreen(navController: NavController) {
             },
 
         ) {
-            Text("Gå till lobbyn och spela igen! ")
+            Text(" <-- BACK TO LOBBY FOR ANOTHER ROUND <-- ")
 
 
         }
