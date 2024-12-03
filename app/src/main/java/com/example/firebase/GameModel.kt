@@ -17,8 +17,6 @@ class GameModel: ViewModel() {
     val gameMap = MutableStateFlow<Map<String, Game>>(emptyMap())
     var localGameId = mutableStateOf<String?>(null)
 
-
-
     fun initGame() {
 
         db.collection("players")
@@ -74,11 +72,9 @@ class GameModel: ViewModel() {
             )
     }
 
-
-
     fun GameEnding(navController: NavController) {
         viewModelScope.launch {
-            delay(5000)
+            delay(3000)
             navController.navigate("LeaderboardScreen")
         }
     }

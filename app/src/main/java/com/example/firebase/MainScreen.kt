@@ -66,7 +66,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                 winnerMessage= " AND THE WINNER IS.. $winnerName "
 
                 model.GameEnding(navController)
-                return@observer
+               // return@observer
             }
 
             val isDraw = updatedGame.gameBoard.all { it != 0 } // all kollar om alla i listan inte är 0, då har vi placerat ut alla och vi har ingen winnare
@@ -195,7 +195,6 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
 
     }
 }
-
 
 fun clickHandler(cell: Int, gameId: String, model: GameModel, game: Game) {
 

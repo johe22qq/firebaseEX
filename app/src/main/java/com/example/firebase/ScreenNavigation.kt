@@ -18,16 +18,14 @@ fun ScreenNavigation(navController: NavHostController, model: GameModel) {
     ) {
         composable("LobbyScreen") { LobbyScreen(navController,model) }
         composable("LeaderboardScreen") { LeaderboardScreen(navController) }
-
-
-        composable("MainScreen/{gameId}") { backStackEntry ->
-            val gameId = backStackEntry.arguments?.getString("gameId")
+        composable("MainScreen/{gameId}") { arg ->
+            val gameId = arg.arguments?.getString("gameId")
             MainScreen(navController,model,gameId)
 
-        }// Eventuellt även ifrån MainScreen beroende på om vi gör fler fönster eller vill kunna komam tillbaka
+        }
         composable("StartScreen") { StartScreen(navController) }
         composable("NewPlayerScreen") { NewPlayerScreen(navController,model) }
-// lust nu ingen navController i mainscreen, (test)
+
     }
 }
 @Composable

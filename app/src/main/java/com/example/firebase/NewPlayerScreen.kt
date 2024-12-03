@@ -26,6 +26,7 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
 
     var playerName by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -65,11 +66,15 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
                     model.db.collection("players")
                         .whereEqualTo("name", playerName)
                         .get()
-                        .addOnSuccessListener { querySnapshot ->
-                            val PlayerEXIST = querySnapshot.documents.firstOrNull()
+                        .addOnSuccessListener { arg ->
+                            val PlayerEXIST = arg.documents.firstOrNull()
 
                             if (PlayerEXIST != null) {
                                 model.localPlayerId.value = PlayerEXIST.id
+                                //---------------------------SESSION-SPARANDE---------------------------------------------
+                                val sharedPreferences = context.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
+                                sharedPreferences.edit().putString("playerId", PlayerEXIST.id).apply()
+                                //---------------------------SESSION-SPARANDE---------------------------------------------
                                 navController.navigate("LobbyScreen")
                             } else {
                                 val newPlayerId = model.db.collection("players").document().id
@@ -82,6 +87,10 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
                                 model.db.collection("players").document(newPlayerId).set(newPlayer)
                                     .addOnSuccessListener {
                                         model.localPlayerId.value = newPlayerId
+                                        //---------------------------SESSION-SPARANDE---------------------------------------------
+                                        val sharedPreferences = context.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
+                                        sharedPreferences.edit().putString("playerId", newPlayerId).apply()
+                                        //---------------------------SESSION-SPARANDE---------------------------------------------
                                         navController.navigate("LobbyScreen")
                                     }
                             }
