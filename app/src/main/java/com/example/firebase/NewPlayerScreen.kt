@@ -23,10 +23,21 @@ import com.google.firebase.ktx.Firebase
 @Composable
 fun NewPlayerScreen(navController: NavController, model: GameModel) {
 
+    //-------------------------NAVIGER TILL SKÄRMEN OM DU REDAN HAR EN SESSION----------------------------------------
+    val context = LocalContext.current
+    val sharedPreferences = context.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
+    val savedPlayerId = sharedPreferences.getString("playerId", null)
+
+    LaunchedEffect(savedPlayerId) {
+        if (!savedPlayerId.isNullOrEmpty()) {
+            model.localPlayerId.value = savedPlayerId
+            navController.navigate("LobbyScreen")
+        }
+    }
+    //---------------------------------------------------------------------------------------------------------------
 
     var playerName by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
-    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -69,11 +80,12 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
                         .addOnSuccessListener { arg ->
                             val PlayerEXIST = arg.documents.firstOrNull()
 
+
                             if (PlayerEXIST != null) {
-                                model.localPlayerId.value = PlayerEXIST.id
-                                //---------------------------SESSION-SPARANDE---------------------------------------------
+                                model.localPlayerId.value = PlayerEXIST.id // detta gör jag för att fylla på databasen
+                                //---------------------------SESSION-SPARANDE-----med reservation för om jag har tänkt rätt----------------------------------------
                                 val sharedPreferences = context.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
-                                sharedPreferences.edit().putString("playerId", PlayerEXIST.id).apply()
+                                sharedPreferences.edit().putString("playerId", PlayerEXIST.id).apply() // men jag sparar även en session med idt
                                 //---------------------------SESSION-SPARANDE---------------------------------------------
                                 navController.navigate("LobbyScreen")
                             } else {

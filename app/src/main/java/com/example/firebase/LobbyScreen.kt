@@ -40,22 +40,30 @@ import androidx.navigation.NavHostController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuderat Nav, måste ha en gamemodell
+fun LobbyScreen(navController: NavHostController, model: GameModel) {
 
     val games by model.gameMap.collectAsStateWithLifecycle()
 
-// vi behöver hämta spelarens id i nån currentvariabel och matcha databasens id,  inspiererad av lab5 ex
-    val sharedPreferences =
-        LocalContext.current.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
-            .getString("playerId", "")
+    val context = LocalContext.current
+    val sharedPreferences = context.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
+    val savedPlayerId = sharedPreferences.getString("playerId", "")
 
-    if (!sharedPreferences.isNullOrEmpty()) {
-        model.localPlayerId.value = sharedPreferences
+    LaunchedEffect(savedPlayerId) {
+        if (!savedPlayerId.isNullOrEmpty()) {
+            model.localPlayerId.value = savedPlayerId // här plockar jag id från sharedpref inte från databasen, pga av sessionen
+        }
     }
 
     var opponentName by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
 
+
+ //-------------------------OM NAMNET IFRÅN SESSIONEN SPARAS COREKT BÖR JAG SE MITT NAMN HÄT------
+
+    val playerName = remember(model.localPlayerId.value) {
+        model.playerMap.value[model.localPlayerId.value]?.name
+    }
+//-----------------------------------------------------------------------------------------------
 
     Scaffold(
         content = { innerPadding ->
@@ -66,6 +74,15 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) { // inkuder
                     .padding(25.dp)
 
             ) {
+//-------------------------OM NAMNET IFRÅN SESSIONEN SPARAS COREKT BÖR JAG SE MITT NAMN HÄT----------------------------------------
+                Text(
+                    text = "Welcome, $playerName!",
+                    style = androidx.compose.material3.MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(bottom = 15.dp)
+                )
+ //--------------------------------------------------------------------------------------------------------------------------------------
+
+
                 Text("ENTER OPONANTS NAME")
                 OutlinedTextField(
                     value = opponentName,
