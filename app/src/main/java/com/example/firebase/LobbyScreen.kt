@@ -58,7 +58,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) {
     var errorMessage by remember { mutableStateOf("") }
 
 
- //-------------------------OM NAMNET IFRÅN SESSIONEN SPARAS COREKT BÖR JAG SE MITT NAMN HÄT------
+ //--------------------------------------------------------------------------------------------
 
     val playerName = remember(model.localPlayerId.value) {
         model.playerMap.value[model.localPlayerId.value]?.name
@@ -109,6 +109,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) {
                                 )
                             }
                         } else {
+
                             errorMessage = "THERE IS NO PLAYER WITH THAT NAME  "
                         }
                     },
@@ -171,7 +172,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) {
 
 }
 
-//samma kod som i leaderbord fast utan points
+//samma kod som i leaderbord fast utan points, kanske lite DRY varning på denna
 @Composable
 fun DisplayAllPlayers(model: GameModel) {
 

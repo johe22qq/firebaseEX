@@ -25,7 +25,7 @@ class GameModel: ViewModel() {
                     return@addSnapshotListener
                 }
                 if (value != null) {
-                    val updatedMap = value.documents.associate { doc ->
+                    val updatedMap = value.documents.associate { doc -> //value.dokuments represnetrar alla dokument i players
                         doc.id to doc.toObject(Player::class.java)!!
                     }
                     playerMap.value = updatedMap
@@ -74,7 +74,7 @@ class GameModel: ViewModel() {
 
     fun GameEnding(navController: NavController) {
         viewModelScope.launch {
-            delay(3000)
+            delay(3000) // måste ligga i en corountin och när det gör det måste jag använda viewmodelscope, asynkrona operationer
             navController.navigate("LeaderboardScreen")
         }
     }

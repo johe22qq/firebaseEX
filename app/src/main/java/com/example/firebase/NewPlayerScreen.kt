@@ -25,7 +25,9 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
 
     //-------------------------NAVIGER TILL SKÄRMEN OM DU REDAN HAR EN SESSION----------------------------------------
     val context = LocalContext.current
-    val sharedPreferences = context.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
+    val sharedPreferences = remember {
+    context.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE) // ändrat, orde kanske göra en klass som hanterar sharedpreferenses.
+    }
     val savedPlayerId = sharedPreferences.getString("playerId", null)
 
     LaunchedEffect(savedPlayerId) {
@@ -84,7 +86,6 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
                             if (PlayerEXIST != null) {
                                 model.localPlayerId.value = PlayerEXIST.id // detta gör jag för att fylla på databasen
                                 //---------------------------SESSION-SPARANDE-----med reservation för om jag har tänkt rätt----------------------------------------
-                                val sharedPreferences = context.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
                                 sharedPreferences.edit().putString("playerId", PlayerEXIST.id).apply() // men jag sparar även en session med idt
                                 //---------------------------SESSION-SPARANDE---------------------------------------------
                                 navController.navigate("LobbyScreen")
@@ -100,7 +101,6 @@ fun NewPlayerScreen(navController: NavController, model: GameModel) {
                                     .addOnSuccessListener {
                                         model.localPlayerId.value = newPlayerId
                                         //---------------------------SESSION-SPARANDE---------------------------------------------
-                                        val sharedPreferences = context.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
                                         sharedPreferences.edit().putString("playerId", newPlayerId).apply()
                                         //---------------------------SESSION-SPARANDE---------------------------------------------
                                         navController.navigate("LobbyScreen")

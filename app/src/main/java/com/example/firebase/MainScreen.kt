@@ -38,8 +38,6 @@ import kotlinx.coroutines.delay
 @Composable
 fun MainScreen(navController: NavController, model: GameModel, gameId: String?) { //
 
-
-
     if (gameId == null) {
         return
     }
@@ -66,7 +64,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                 winnerMessage= " AND THE WINNER IS.. $winnerName "
 
                 model.GameEnding(navController)
-               // return@observer
+
             }
 
             val isDraw = updatedGame.gameBoard.all { it != 0 } // all kollar om alla i listan inte är 0, då har vi placerat ut alla och vi har ingen winnare
@@ -106,7 +104,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
 
         Text(
             text = winnerMessage!!,
-            color = Color.Black,
+            color = Black,
             fontSize = 24.sp,
             modifier = Modifier
                 .padding(top=800.dp)
@@ -201,9 +199,12 @@ fun clickHandler(cell: Int, gameId: String, model: GameModel, game: Game) {
     if (game.gameBoard[cell] != 0) {
         return
     }
+    /*
     if (game.currentPlayerID != model.localPlayerId.value) {
-        return
+        return, denna gör samma sak som innan jag anropar klickhandler
     }
+    */
+
     val updatedBoard = game.gameBoard.toMutableList()
     if (game.currentPlayerID == game.player1Id) {
         updatedBoard[cell] = 1
