@@ -92,7 +92,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) {
 
                 Button(
                     onClick = {
-                        if (opponentName.isNotBlank()) {
+                        if (opponentName.isNotBlank() && opponentName != playerName) {
                             val opponent = model.playerMap.value.entries.find { it.value.name == opponentName }
                             if (opponent != null) {
 
@@ -110,10 +110,12 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) {
                             }
                         } else {
 
-                            errorMessage = "THERE IS NO PLAYER WITH THAT NAME  "
+                            errorMessage = "THERE IS NO OPPONENT WITH THAT NAME  "
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+
                 ) {
                     Text("SEND CHALLENGE")
                 }
@@ -159,7 +161,7 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) {
 
                     Text(
                         errorMessage,
-                        modifier = Modifier.padding(top=300.dp, start = 20.dp, end = 20.dp)
+                        modifier = Modifier.padding(top=850.dp, start = 20.dp, end = 20.dp)
 
                     )
             }

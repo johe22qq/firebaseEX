@@ -111,7 +111,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
                 .border(3.dp, color=Black)
                 .background(color = Color.Green)
         )
-    }
+        }
     }
 
     currentGame.value?.let { game ->
@@ -130,7 +130,7 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
             modifier = Modifier
                 .padding(18.dp),
         )
-    }
+        }
     }
 
     val cells = List(42) { it }

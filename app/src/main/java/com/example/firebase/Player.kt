@@ -15,7 +15,8 @@ data class Player(
 fun addScore(playerId: String) {
 
     val player = Firebase.firestore.collection("players").document(playerId)
-    player.get().addOnSuccessListener { document ->
+    player.get()
+        .addOnSuccessListener { document ->
         if (document != null && document.exists()) {
             val currentScore = document.getLong("score")?.toInt() ?: 0 // i databasen lagras "number" som en long
             player.update("score", currentScore + 1)

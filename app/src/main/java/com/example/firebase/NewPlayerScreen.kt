@@ -24,7 +24,7 @@ import com.google.firebase.ktx.Firebase
 fun NewPlayerScreen(navController: NavController, model: GameModel) {
 
     //-------------------------NAVIGER TILL SKÄRMEN OM DU REDAN HAR EN SESSION----------------------------------------
-    val context = LocalContext.current
+    val context = LocalContext.current // representerar miljön där appen körs
     val sharedPreferences = remember {
     context.getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE) // ändrat, orde kanske göra en klass som hanterar sharedpreferenses.
     }
