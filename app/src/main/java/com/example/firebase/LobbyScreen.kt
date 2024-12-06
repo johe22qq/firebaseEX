@@ -122,7 +122,6 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) {
                 DisplayAllPlayers(model = model)
 //---------------------------------------------------------------------------------------------------------------------------
 
-
                 games.forEach { (gameId, game) ->
 
                     if (game.player1Id == model.localPlayerId.value || game.player2Id == model.localPlayerId.value) {
@@ -136,7 +135,6 @@ fun LobbyScreen(navController: NavHostController, model: GameModel) {
                         Text(
                             "CHALLENGE FROM: ${model.playerMap.value[game.player1Id]?.name}",
                             fontSize = 25.sp
-
                         )
                         Button(
                             onClick = {

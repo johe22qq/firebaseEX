@@ -25,8 +25,8 @@ class GameModel: ViewModel() {
                     return@addSnapshotListener
                 }
                 if (value != null) {
-                    val updatedMap = value.documents.associate { doc -> //value.dokuments represnetrar alla dokument i players
-                        doc.id to doc.toObject(Player::class.java)!!
+                    val updatedMap = value.documents.associate { associatePlayer ->
+                        associatePlayer.id to associatePlayer.toObject(Player::class.java)!!
                     }
                     playerMap.value = updatedMap
                 }
@@ -38,8 +38,8 @@ class GameModel: ViewModel() {
                     return@addSnapshotListener
                 }
                 if (value != null) {
-                    val updatedMap = value.documents.associate { doc ->
-                        doc.id to doc.toObject(Game::class.java)!!
+                    val updatedMap = value.documents.associate { associateGame ->
+                        associateGame.id to associateGame.toObject(Game::class.java)!!
                     }
                     gameMap.value = updatedMap
                 }

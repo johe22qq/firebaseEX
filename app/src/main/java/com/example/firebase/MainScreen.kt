@@ -193,38 +193,33 @@ fun MainScreen(navController: NavController, model: GameModel, gameId: String?) 
 
     }
 }
-
 fun clickHandler(cell: Int, gameId: String, model: GameModel, game: Game) {
+    val column = cell % 7 // tex 16%7 =2
+    val updatedBoard = game.gameBoard.toMutableList()
 
-    if (game.gameBoard[cell] != 0) {
-        return
+    var row = 5// bottemrad
+    while (row >= 0) { // från botten till toppen
+        val index = row * 7 + column // hoppar till rätt rad , tex 5 *7 +2 = 37e cellen
+        if (updatedBoard[index] == 0) {
+            updatedBoard[index] = if (game.currentPlayerID == game.player1Id) 1 else 2
+
+            val nextPlayerId = if (game.currentPlayerID == game.player1Id) game.player2Id else game.player1Id
+            val nextGameState = if (game.currentPlayerID == game.player1Id) "player2_turn" else "player1_turn"
+
+            model.updateBoard(gameId, updatedBoard, nextPlayerId, nextGameState)
+            break
+        }
+        row--
     }
     /*
-    if (game.currentPlayerID != model.localPlayerId.value) {
-        return, denna gör samma sak som innan jag anropar klickhandler
-    }
-    */
-
-    val updatedBoard = game.gameBoard.toMutableList()
-    if (game.currentPlayerID == game.player1Id) {
-        updatedBoard[cell] = 1
-
-    } else {
-        updatedBoard[cell] = 2
-
-    }
-    val nextPlayerId = if (game.currentPlayerID == game.player1Id) game.player2Id else game.player1Id
-
-    val nextGameState = if (game.currentPlayerID == game.player1Id) "player2_turn" else "player1_turn"
-    model.updateBoard(gameId, updatedBoard, nextPlayerId,nextGameState)
-
-
+    0  1  2  3  4  5   6
+    7  8  9  10 11 12 13
+    14 15 16 17 18 09 20
+    21 22 23 24 25 26 27
+    28 29 30 31 32 33 34
+    35 36 37 38 39 40 41
+     */
 }
-
-
-
-
-
 
 
 

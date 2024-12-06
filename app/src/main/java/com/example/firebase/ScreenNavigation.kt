@@ -21,11 +21,9 @@ fun ScreenNavigation(navController: NavHostController, model: GameModel) {
         composable("MainScreen/{gameId}") { arg ->
             val gameId = arg.arguments?.getString("gameId")
             MainScreen(navController,model,gameId)
-
         }
         composable("StartScreen") { StartScreen(navController) }
         composable("NewPlayerScreen") { NewPlayerScreen(navController,model) }
-
     }
 }
 @Composable
